@@ -154,29 +154,25 @@ export const todosPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
-          if (data.success) {
-            // Encuentra la fila correspondiente
-            const row = document.querySelector(`tr[data-id="${editingTaskId}"]`);
+          const row = document.querySelector(`tr[data-id="${editingTaskId}"]`);
 
-            if (row) {
-              const tdTitle = row.querySelector("td:nth-child(2)");
-              const tdCompleted = row.querySelector("td:nth-child(3)");
+          if (row) {
+            const tdTitle = row.querySelector("td:nth-child(2)");
+            const tdCompleted = row.querySelector("td:nth-child(3)");
 
-              // Actualiza los valores
-              tdTitle.textContent = data.todo.title;
-              tdCompleted.textContent = data.todo.completed ? "Sí" : "No";
+            // Actualiza los valores
+            tdTitle.textContent = data.todo.title;
+            tdCompleted.textContent = data.todo.completed ? "Sí" : "No";
 
-              // Limpiar el formulario
-              titleInput.value = "";
-              completedInput.checked = false;
+            // Limpiar el formulario
+            titleInput.value = "";
+            completedInput.checked = false;
 
-              // Ocultar el formulario
-              taskForm.classList.add("hidden");
+            // Ocultar el formulario
+            taskForm.classList.add("hidden");
 
-              alert("Tarea actualizada con éxito");
-            }
-          } 
+            alert("Tarea actualizada con éxito");
+          }
         })
         .catch((error) => {
           console.error("Error al actualizar la tarea:", error);
@@ -267,9 +263,9 @@ export const todosPage = () => {
               completedInput.checked = data.todo.completed;
 
               // Mostrar el formulario de edición
-              taskForm.classList.remove("hidden");
-              submitButton.textContent = "Actualizar Tarea";
               editingTaskId = data.todo.id;
+              submitButton.textContent = "Actualizar Tarea";
+              taskForm.classList.remove("hidden");
             });
 
             td5.appendChild(btnEdit);
@@ -290,21 +286,18 @@ export const todosPage = () => {
             // Ocultar el formulario
             taskForm.classList.add("hidden");
 
-            alert("Tarea creada con éxito");
-          } else {
-            alert("Error al crear la tarea");
+            alert("Tarea agregada con éxito");
           }
         })
         .catch((error) => {
-          console.error("Error al crear la tarea:", error);
-          alert("Error al crear la tarea");
+          console.error("Error al agregar la tarea:", error);
+          alert("Error al agregar la tarea");
         });
     }
   });
 
-  // Obtener todas las tareas al cargar la página
+  // Cargar tareas al inicio
   fetch("http://localhost:4000/todos", {
-    method: "GET",
     credentials: "include",
   })
     .then((response) => response.json())
@@ -382,9 +375,9 @@ export const todosPage = () => {
             completedInput.checked = todo.completed;
 
             // Mostrar el formulario de edición
-            taskForm.classList.remove("hidden");
-            submitButton.textContent = "Actualizar Tarea";
             editingTaskId = todo.id;
+            submitButton.textContent = "Actualizar Tarea";
+            taskForm.classList.remove("hidden");
           });
 
           td5.appendChild(btnEdit);
@@ -398,17 +391,17 @@ export const todosPage = () => {
 
           tbody.appendChild(tr);
         });
-      } else {
-        alert("Error al obtener las tareas");
       }
     })
     .catch((error) => {
-      console.error("Error al obtener las tareas:", error);
-      alert("Error al obtener las tareas");
+      console.error("Error al cargar las tareas:", error);
+      alert("Error al cargar las tareas");
     });
 
   return container;
 };
+
+
 
 
 
